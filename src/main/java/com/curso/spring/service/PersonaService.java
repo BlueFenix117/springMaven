@@ -12,4 +12,13 @@ public interface PersonaService {
 
     ResponseEntity<Personas> guardarPersona(Personas personas);
     ResponseEntity<Personas> guardarPersonaAlternativo(PersonaRequest request);
+    Personas buscarPersonaId(Long id);
+
+    ResponseEntity<Object> updatePersona(PersonaRequest request);
+
+    void eliminarPersona(Long id);
+
+    List<String> personasByGenero(String genero);
+
+    ResponseEntity<Object> getInfoPersonas(Integer id);
 }
