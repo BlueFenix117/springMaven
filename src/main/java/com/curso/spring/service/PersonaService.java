@@ -21,4 +21,10 @@ public interface PersonaService {
     List<String> personasByGenero(String genero);
 
     ResponseEntity<Object> getInfoPersonas(Integer id);
+
+    ResponseEntity<?> savePersonasNative(PersonaRequest request);
+
+    ResponseEntity<?> updatePersonasNative(PersonaRequest request) throws Exception;
+
+    boolean deletePersonNative(int id)throws Exception;
 }

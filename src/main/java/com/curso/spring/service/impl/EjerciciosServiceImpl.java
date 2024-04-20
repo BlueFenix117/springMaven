@@ -1,8 +1,11 @@
 package com.curso.spring.service.impl;
 
+import com.curso.spring.dto.response.Posts;
 import com.curso.spring.service.EjerciciosService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,5 +33,24 @@ public class EjerciciosServiceImpl implements EjerciciosService {
         }
 
         return response;
+    }
+
+    @Override
+    public Posts getPost(int id) {
+
+        ResponseEntity<Posts> resultPosts = null;
+        try{
+            String url = "https://jsonplaceholder.typicode.com/todos/" + id;
+
+            RestTemplate restTemplate = new RestTemplate();
+
+            Posts response =restTemplate.getForObject(url, Posts.class);
+
+            resultPosts = ResponseEntity.ok(response);
+
+        }catch (Exception e){
+            log.error("Error al consumir el servicio");
+        }
+        return resultPosts.getBody();
     }
 }

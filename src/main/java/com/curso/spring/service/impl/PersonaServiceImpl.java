@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -103,6 +104,65 @@ public class PersonaServiceImpl implements PersonaService {
             }
         } catch(Exception e){
             log.error("Error el metodo getInfoPersona " +e.getMessage());
+        }
+
+        return response;
+    }
+
+    @Transactional
+    @Override
+    public ResponseEntity<?> savePersonasNative(PersonaRequest request) {
+
+        ResponseEntity<?> response = null;
+
+        try {
+            log.info("Request guardar" + request);
+            Integer result = personasRepository.saveNativePerson(request);
+
+            if (result > 0) {
+                response = ResponseEntity.ok().body("Guardado exitodso");
+            } else {
+                response = ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Ocurrio un error al intentar insertar");
+            }
+
+        } catch (Exception e) {
+            log.error("Error en motodo savePersonaNative" + e.getMessage());
+        }
+        return response;
+    }
+
+    @Transactional
+    @Override
+    public ResponseEntity<?> updatePersonasNative(PersonaRequest request) throws Exception {
+
+        ResponseEntity<?> response = null;
+        try {
+            Integer result = personasRepository.updateNativePerson(request);
+            if (result > 0) {
+                response = ResponseEntity.ok().body("Actualizacion exitosa");
+            } else {
+                response = ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Ocurrio un error al intentar actualizar");
+            }
+
+        } catch (Exception e) {
+            throw new Exception("Error en meotdo updatePersonNative" + e.getMessage());
+        }
+        return response;
+    }
+
+    //Metodo para borrar persona
+    @Override
+    @Transactional
+    public boolean deletePersonNative(int id) throws Exception {
+
+        boolean response = false;
+
+        try {
+            personasRepository.deleteNativePerson(id);
+            response = true;
+
+        } catch (Exception e) {
+            throw new Exception("Error al eliminar" + e.getMessage());
         }
 
         return response;

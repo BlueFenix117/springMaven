@@ -68,4 +68,22 @@ public class PersonaController {
     public ResponseEntity<Object> getInfoPersonas(@PathVariable Integer id){
         return personaService.getInfoPersonas(id);
     }
+
+    @PostMapping("/Person/save/native")
+    @Operation(summary = "Operacion para guardar la informacion de personas de forma nativa")
+    public ResponseEntity<?> savePersonaNative(@RequestBody PersonaRequest request){
+        return personaService.savePersonasNative(request);
+    }
+
+    @PutMapping("/Person/native-update")
+    @Operation(summary = "Operacion para actualizar la informacion de personas de forma nativa")
+    public ResponseEntity<?> updatePersonNative(@RequestBody PersonaRequest request) throws Exception {
+        return personaService.updatePersonasNative(request);
+    }
+
+    @DeleteMapping("/Person/native-delete/{id}")
+    @Operation(summary = "Operacion para eliminar la informacion de personas de forma nativa")
+    public boolean deletePersonNative(@PathVariable int id) throws Exception{
+        return personaService.deletePersonNative(id);
+    }
 }

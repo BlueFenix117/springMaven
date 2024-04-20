@@ -1,7 +1,9 @@
 package com.curso.spring.controller;
 
 import com.curso.spring.dto.Persona;
+import com.curso.spring.dto.response.Posts;
 import com.curso.spring.service.EjerciciosService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -36,5 +38,12 @@ public class HelloWorldController {
     @GetMapping("/nombres")
     public List<String> getNombres(){
         return ejerciciosService.getNombres();
+    }
+
+    @GetMapping("/posts/{id}")
+    @Operation(summary = "Operacion para consumir un servicio rest")
+    public Posts getPost(@PathVariable int id){
+
+        return ejerciciosService.getPost(id);
     }
 }
